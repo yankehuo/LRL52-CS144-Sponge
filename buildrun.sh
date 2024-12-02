@@ -1,10 +1,18 @@
 #!/bin/bash
-DIR=./build
-if [ -d $DIR ];then
+CUR_DIR="$(dirname "$(realpath $0)")"
+echo "CUR_DIR: $CUR_DIR"
+DIR="$CUR_DIR/build"
+CLEAN="clean"
+if [ -d $DIR ]; then
     echo "$DIR existed!"
-    rm -rf $DIR
-    echo "$DIR removed!"
+    if [ "$1" = "$CLEAN" ]; then
+        rm -rf $DIR
+        echo "$DIR removed!"
+    fi
 fi
 
 cmake -B build
 cmake --build build
+
+cd $DIR && make check_webget
+cd $DIR && make check_lab0
