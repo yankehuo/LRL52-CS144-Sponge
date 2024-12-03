@@ -17,4 +17,5 @@ cmake --build build
 # cd $DIR && make check_webget
 # cd $DIR && make check_lab0
 # cd $DIR && make check_lab1
-cd $DIR && ctest -R wrap
+# cd $DIR && ctest -R wrap
+cd $DIR && make check_lab2
