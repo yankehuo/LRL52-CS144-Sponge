@@ -32,13 +32,10 @@ WrappingInt32 wrap(uint64_t n, WrappingInt32 isn) {
 //! and the other stream runs from the remote TCPSender to the local TCPReceiver and
 //! has a different ISN.
 uint64_t unwrap(WrappingInt32 n, WrappingInt32 isn, uint64_t checkpoint) {
-    // n==isn+x(%MOD), x==n-isn(%MOD)
-    // checkpoint-2^31 <= x <= checkpoint+2^31
-    auto low32bit = static_cast<uint32_t>(n - isn);
-    auto high32bit1 = (checkpoint + (1 << 31)) & 0xffffffff00000000;
-    auto high32bit2 = (checkpoint - (1 << 31)) & 0xffffffff00000000;
-    auto res1 = low32bit | high32bit1;
-    auto res2 = low32bit | high32bit2;
-    return max(res1, checkpoint) - min(res1, checkpoint) < max(res2, checkpoint) - min(res2, checkpoint) ?
-        res1 : res2;
+    uint32_t offset = n - wrap(checkpoint, isn);
+    uint64_t ans = checkpoint + offset;
+    if (offset >= (1ul << 31) && ans >= UINT32_MOD) {
+        ans -= UINT32_MOD;
+    }
+    return ans;
 }
