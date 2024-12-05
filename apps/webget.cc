@@ -1,4 +1,5 @@
-#include "socket.hh"
+// #include "socket.hh"
+#include "tcp_sponge_socket.hh"
 #include "util.hh"
 
 #include <cstdlib>
@@ -18,7 +19,8 @@ void get_URL(const string &host, const string &path) {
     // the "eof" (end of file).
 
     // add actual strings
-    TCPSocket sock;
+    // TCPSocket sock;
+    CS144TCPSocket sock;
     sock.connect(Address(host, "http"));
     std::string request{};
     request = "GET " + path + " HTTP/1.1\r\n" + 

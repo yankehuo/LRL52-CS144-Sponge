@@ -20,5 +20,5 @@ cmake --build build
 # cd $DIR && ctest -R wrap
 # cd $DIR && make check_lab2
 # cd $DIR && make check_lab3
-# cd $DIR && make check_lab4
-cd $DIR && ctest -R t_active_close
+cd $DIR && make check_lab4
+# cd $DIR && ctest -R t_active_close

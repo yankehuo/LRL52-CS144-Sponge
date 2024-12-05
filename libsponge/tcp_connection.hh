@@ -22,7 +22,7 @@ class TCPConnection {
     bool _linger_after_streams_finish{true};
 
     // added
-    bool _time_since_last_segment_received{0};
+    size_t _time_since_last_segment_received{0};
     bool _is_active{true};
 
     void _set_rst_state(const bool send_rst);
