@@ -47,13 +47,16 @@ void StreamReassembler::push_substring(const string &data, const size_t index, c
 
     // write, and move write ptr
     std::string str;
+    str.reserve(_capacity);
     while (first_unassembled < _eof_index && _stream[first_unassembled % _capacity].second) {
         str.push_back(_stream[first_unassembled % _capacity].first);
         _stream[first_unassembled % _capacity] = {0, false};
         --_unassembled_cnt;
         ++first_unassembled;
     }
-    _output.write(str);
+    if (str.size()) {
+        _output.write(str);
+    }
     if (_eof_index == first_unassembled) {
         _output.end_input();
     }

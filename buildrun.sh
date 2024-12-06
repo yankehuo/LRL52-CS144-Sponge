@@ -12,7 +12,7 @@ if [ -d $DIR ]; then
 fi
 
 cmake -B build
-cmake --build build
+cmake --build build 
 
 # cd $DIR && make check_webget
 # cd $DIR && make check_lab0
@@ -20,5 +20,7 @@ cmake --build build
 # cd $DIR && ctest -R wrap
 # cd $DIR && make check_lab2
 # cd $DIR && make check_lab3
-cd $DIR && make check_lab4
+# cd $DIR && make check_lab4
 # cd $DIR && ctest -R t_active_close
+# cd $DIR && valgrind --tool=callgrind ./apps/tcp_benchmark
+cd $DIR && ./apps/tcp_benchmark

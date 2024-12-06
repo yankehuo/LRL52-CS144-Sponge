@@ -17,7 +17,7 @@ static const uint64_t UINT32_MOD = static_cast<uint64_t>(std::numeric_limits<uin
 //! \param n The input absolute 64-bit sequence number
 //! \param isn The initial sequence number
 WrappingInt32 wrap(uint64_t n, WrappingInt32 isn) {
-    uint32_t ans = (isn + n % UINT32_MOD).raw_value() % UINT32_MOD;
+    uint32_t ans = (isn + static_cast<uint32_t>(n)).raw_value();
     return WrappingInt32{ans};
 }
 
