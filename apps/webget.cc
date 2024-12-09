@@ -20,7 +20,8 @@ void get_URL(const string &host, const string &path) {
 
     // add actual strings
     // TCPSocket sock;
-    CS144TCPSocket sock;
+    // CS144TCPSocket sock;
+    FullStackSocket sock;
     sock.connect(Address(host, "http"));
     std::string request{};
     request = "GET " + path + " HTTP/1.1\r\n" + 
