@@ -31,12 +31,32 @@ void Router::add_route(const uint32_t route_prefix,
 
     DUMMY_CODE(route_prefix, prefix_length, next_hop, interface_num);
     // Your code here.
+    _route_table.emplace_back(route_prefix, prefix_length, next_hop, interface_num);
 }
 
 //! \param[in] dgram The datagram to be routed
 void Router::route_one_datagram(InternetDatagram &dgram) {
     DUMMY_CODE(dgram);
     // Your code here.
+    auto ip = dgram.header().dst;
+    auto best_match = _route_table.end();
+    for (auto it = _route_table.begin(); it != _route_table.end(); ++it) {
+        // it->prefix_length == 0: means >>0 or means >> 32
+        if (it->_prefix_length == 0 || (it->_route_prefix ^ ip) >> (32 - it->_prefix_length) == 0) {
+            best_match = (best_match == _route_table.end() || it->_prefix_length > best_match->_prefix_length) ?
+                            it : best_match;
+        }
+    }
+    // filter by ttl
+    if (best_match != _route_table.end() && dgram.header().ttl > 1) {
+        --dgram.header().ttl;
+        auto &next_interface = interface(best_match->_interface_num);
+        if (best_match->_next_hop.has_value()) {
+            next_interface.send_datagram(dgram, best_match->_next_hop.value());
+        } else { // directlyt attached to the network
+            next_interface.send_datagram(dgram, Address::from_ipv4_numeric(ip));
+        }
+    }
 }
 
 void Router::route() {

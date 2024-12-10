@@ -41,6 +41,25 @@ class AsyncNetworkInterface : public NetworkInterface {
 //! \brief A router that has multiple network interfaces and
 //! performs longest-prefix-match routing between them.
 class Router {
+private:
+    struct RouteEntry {
+        uint32_t _route_prefix;
+        uint8_t _prefix_length;
+        std::optional<Address> _next_hop;
+        size_t _interface_num;
+
+        RouteEntry() = default;
+        RouteEntry(const uint32_t route_prefix,
+                   const uint8_t prefix_length,
+                   const std::optional<Address> &next_hop,
+                   const size_t interface_num) :
+                   _route_prefix(route_prefix), _prefix_length(prefix_length),
+                   _next_hop(next_hop), _interface_num(interface_num)
+                   {}
+    };
+
+    std::vector<RouteEntry> _route_table{};
+
     //! The router's collection of network interfaces
     std::vector<AsyncNetworkInterface> _interfaces{};
 

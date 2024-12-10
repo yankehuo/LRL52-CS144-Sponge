@@ -24,5 +24,6 @@ cmake --build build
 # cd $DIR && ctest -R t_active_close
 # cd $DIR && valgrind --tool=callgrind ./apps/tcp_benchmark
 # cd $DIR && ./apps/tcp_benchmark
-cd $DIR && make check_lab5
+# cd $DIR && make check_lab5
 # cd $DIR && ctest -V -R "^arp"
+cd $DIR && make check_lab6
