@@ -26,4 +26,6 @@ cmake --build build
 # cd $DIR && ./apps/tcp_benchmark
 # cd $DIR && make check_lab5
 # cd $DIR && ctest -V -R "^arp"
-cd $DIR && make check_lab6
+# cd $DIR && make check_lab6
+cd $DIR && ./apps/webget cs144.keithw.org /hello
+cd $DIR && ./apps/webget search.bilibili.com /all

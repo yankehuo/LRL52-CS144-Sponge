@@ -31,9 +31,10 @@ void get_URL(const string &host, const string &path) {
     while (!sock.eof()) {
         std::cout << sock.read();
     }
-    sock.close();
+    // sock.close();
 
     cerr << "Function called: get_URL(" << host << ", " << path << ").\n";
+    sock.wait_until_closed();
     // cerr << "Warning: get_URL() has not been implemented yet.\n";
 }
 
